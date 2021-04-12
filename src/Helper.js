@@ -22,10 +22,10 @@ module.exports = {
   breakText(text) {
     const splittedArr = text.trim().split(" ");
     return {
-    splittedArr: splittedArr,
-    n_words: splittedArr.length,
-    n_letters: text.length - splittedArr.length + 1
-  }
+      splittedArr: splittedArr,
+      n_words: splittedArr.length,
+      n_letters: text.length - splittedArr.length + 1,
+    };
   },
 
   expandWord(word, abbreviations) {
