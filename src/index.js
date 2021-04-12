@@ -1,4 +1,7 @@
+const helper = require("./Helper");
+const textSimilarity = require("./SenteceSmilarity/index");
+
 module.exports = {
-  helper: require("./Helper"),
-  textSimilarity: require("./SenteceSmilarity/"),
+  helper,
+  textSimilarity,
 };
