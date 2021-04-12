@@ -3,8 +3,7 @@
 let Base = require("./SenteceSmilarity/Base.js");
 let SbEvent = require("./SenteceSmilarity/SbEvent.js");
 let StopWords = require("./SenteceSmilarity/Stopwords.js");
-let BinarySearch = require("./node_modules/binary-search");
-let debug = require("./node_modules/debug")("helper");
+let BinarySearch = require("binary-search");
 
 module.exports = {
   //A bunch of objects to help with indexing through logstash
@@ -20,19 +19,13 @@ module.exports = {
     );
   },
 
-  breakText = () => {
-    const splittedArr = this.text.trim().split(" ");
-    this.splittedArr = splittedArr;
-    this.n_words = splittedArr.length;
-    this.n_letters = this.text.length - splittedArr.length + 1;
-  },
-  toJSON = () => {
+  breakText(text) {
+    const splittedArr = text.trim().split(" ");
     return {
-      splittedArr: this.splittedArr,
-      n_words: this.n_words,
-      n_letters: this.n_letters,
-      text: this.text,
-    };
+    splittedArr: splittedArr,
+    n_words: splittedArr.length,
+    n_letters: text.length - splittedArr.length + 1
+  }
   },
 
   expandWord(word, abbreviations) {
@@ -65,7 +58,6 @@ module.exports = {
   },
 
   highlightedFields(highlight) {
-    debug("highlight", highlight);
     let hFields = [];
     for (let i in highlight) {
       if (i != "message") {
@@ -107,7 +99,6 @@ module.exports = {
   logAndThrowUndefined: function (error, val, dontKill) {
     if (!val && val != 0) {
       new Error(error);
-      debug("error", error);
       if (!dontKill) {
         SbEvent.emit("error", error);
         SbEvent.emit("close");
@@ -119,7 +110,6 @@ module.exports = {
 
   logAndThrow: function (error, dontKill) {
     new Error(error);
-    debug("error", error);
     if (!dontKill) {
       SbEvent.emit("error", error);
       SbEvent.emit("close");

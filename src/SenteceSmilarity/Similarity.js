@@ -1,7 +1,6 @@
 "use strict";
 
 let Helper = require("../Helper");
-let debug = require("./node_modules/debug")("SentenceSimilarity");
 let deepcopy = require("./node_modules/clone");
 
 /**
@@ -65,8 +64,6 @@ let similarityTable = function (a, b, options) {
       }
     }
   }
-
-  debug(table);
 
   return table;
 };
@@ -142,8 +139,6 @@ let exactScore = function (bm, a, b) {
     }
   }
 
-  debug("bm", bm);
-
   return score;
 };
 
@@ -153,8 +148,6 @@ let matchScore = function (bm, a, b) {
   for (let i of bm.values()) {
     score = score + i.score;
   }
-
-  debug("bm", bm);
 
   return score;
 };
@@ -215,9 +208,6 @@ let similarity = function (ain, bin, options) {
   //Get rid of punctuation and capitalization for the comparison phase.
   a = Helper.cleanArray(a);
   b = Helper.cleanArray(b);
-
-  debug("a", a);
-  debug("b", b);
 
   let table = similarityTable(a, b, options);
 
