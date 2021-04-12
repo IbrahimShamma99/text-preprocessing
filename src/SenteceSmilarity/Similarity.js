@@ -1,7 +1,7 @@
 "use strict";
 
 let Helper = require("../Helper");
-let deepcopy = require("./node_modules/clone");
+let deepcopy = require("clone");
 
 /**
  * Order similarity should only depend on the number of matches, since
