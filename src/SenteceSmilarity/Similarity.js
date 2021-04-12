@@ -1,8 +1,8 @@
 "use strict";
 
 let Helper = require("./Helper");
-let debug = require("debug")("SentenceSimilarity");
-let deepcopy = require("clone");
+let debug = require("./node_modules/debug")("SentenceSimilarity");
+let deepcopy = require("./node_modules/clone");
 
 /**
  * Order similarity should only depend on the number of matches, since

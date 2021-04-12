@@ -3,8 +3,8 @@
 let Base = require("./Base.js");
 let SbEvent = require("./SbEvent.js");
 let StopWords = require("./Stopwords.js");
-let BinarySearch = require("binary-search");
-let debug = require("debug")("helper");
+let BinarySearch = require("./node_modules/binary-search");
+let debug = require("./node_modules/debug")("helper");
 
 module.exports = {
   //A bunch of objects to help with indexing through logstash
