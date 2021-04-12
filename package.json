@@ -4,17 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/IbrahimShamma99/sentence-match.git"
   },
-  "keywords": [],
+  "keywords": [
+    "text",
+    "similarity"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/IbrahimShamma99/sentence-match/issues"
   },
-  "homepage": "https://github.com/IbrahimShamma99/sentence-match#readme"
+  "homepage": "https://github.com/IbrahimShamma99/sentence-match#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@rollup/plugin-babel": "^5.1.0"
+  }
 }

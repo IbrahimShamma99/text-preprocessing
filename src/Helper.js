@@ -1,8 +1,8 @@
 "use strict";
 
-let Base = require("./Base.js");
-let SbEvent = require("./SbEvent.js");
-let StopWords = require("./Stopwords.js");
+let Base = require("./SenteceSmilarity/Base.js");
+let SbEvent = require("./SenteceSmilarity/SbEvent.js");
+let StopWords = require("./SenteceSmilarity/Stopwords.js");
 let BinarySearch = require("./node_modules/binary-search");
 let debug = require("./node_modules/debug")("helper");
 
@@ -18,6 +18,21 @@ module.exports = {
       0,
       Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"))
     );
+  },
+
+  breakText = () => {
+    const splittedArr = this.text.trim().split(" ");
+    this.splittedArr = splittedArr;
+    this.n_words = splittedArr.length;
+    this.n_letters = this.text.length - splittedArr.length + 1;
+  },
+  toJSON = () => {
+    return {
+      splittedArr: this.splittedArr,
+      n_words: this.n_words,
+      n_letters: this.n_letters,
+      text: this.text,
+    };
   },
 
   expandWord(word, abbreviations) {

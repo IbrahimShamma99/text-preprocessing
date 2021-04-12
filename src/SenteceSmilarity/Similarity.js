@@ -1,6 +1,6 @@
 "use strict";
 
-let Helper = require("./Helper");
+let Helper = require("../Helper");
 let debug = require("./node_modules/debug")("SentenceSimilarity");
 let deepcopy = require("./node_modules/clone");
 
