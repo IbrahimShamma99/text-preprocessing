@@ -49,15 +49,6 @@ module.exports = {
     return a;
   },
 
-  extraId: "appendID",
-
-  defaultResponse: [
-    "I'm not sure what you're asking.",
-    "Please clarify.",
-    "I'm not understanding.",
-    "I'm only a bot, clarify.",
-  ],
-
   highlightedFields(highlight) {
     debug("highlight", highlight);
     let hFields = [];
@@ -83,12 +74,9 @@ module.exports = {
     };
   },
 
-  //TODO: get rid of this and replace with highlightedFields
-  //plus an extra call to get the actual field value
   returnHighlightField(highlight) {
     for (let i in highlight) {
       if (highlight[i] != "message") {
-        //console.log('highligh[i]',highlight[i])
         return highlight[i][0].replace(/<\/?em>/g, "");
       }
     }
@@ -179,45 +167,6 @@ module.exports = {
     return false;
   },
 
-  /**
-   * The elasticsearch index name is used in more than
-   * one spot so this is just to make sure that the name
-   * is computed consistently in the different locations.
-   * Note that different users may use the same file so the
-   * database name in elasticsearch needs to be differentiated
-   * differently.
-   *
-   * @param filename is the base name of the file
-   * @param username is the account/user name
-   */
-  uniqueIndexName: function (filename, username) {
-    let expand = filename + "." + username;
-
-    //cut out the leading directory and only leave the
-    //filename
-    let shortName = expand.replace(/^.*[\\\/]/, "");
-    //Logger.info("Using filename", shortName);
-    return shortName.toLowerCase();
-  },
-
-  uniquePhraseIndexName: function (filename, username) {
-    return this.uniqueIndexName(filename + ".phrase", username);
-  },
-
-  hasProperties: function (obj, properties, dontKill) {
-    let found = true;
-    for (let i of properties) {
-      if (typeof obj[i] === "undefined") {
-        new Error("Property" + i + "is undefined");
-        if (!dontKill) {
-          SbEvent.emit("error");
-        }
-        found = false;
-      }
-    }
-    return found;
-  },
-
   timeAndDate: function () {
     let d = new Date();
     let thisTime =
@@ -244,88 +193,6 @@ module.exports = {
 
   fileExtension: function (filename) {
     return filename.split(".").pop();
-  },
-
-  /**
-   * I need a standard place to store these values since they are used in various places, but shouldn't be in the
-   * base class.  This will do for now.
-   */
-  recordValues: {
-    tableName: "qa",
-    fieldNames: [
-      "Question",
-      "Answer",
-      "Status",
-      "Responder",
-      "Qid",
-      "Time",
-      "Type",
-      "Userid",
-      "Replied",
-    ],
-    fieldTypes: [
-      "text",
-      "text",
-      "text",
-      "text",
-      "text",
-      "text",
-      "text",
-      "text",
-      "text",
-    ],
-  },
-
-  validMappingElements: [
-    "none",
-    "item",
-    "place",
-    "price",
-    "property",
-    "definition",
-    "quality",
-    "person",
-    "person2",
-  ],
-
-  /**
-   * TODO: These are taken from BotInformationForm.js and generally should match
-   * as those change in the form.
-   */
-  botDatabaseFields: [
-    "name",
-    "nickname",
-    "purpose",
-    "keywords",
-    "business",
-    "city",
-    "state",
-    "county",
-    "country",
-  ],
-
-  botDatabaseMapping: [
-    "person",
-    "property",
-    "property",
-    "property",
-    "place",
-    "place",
-    "place",
-    "place",
-    "place",
-  ],
-
-  botDatabaseKeyword: {
-    name: "name",
-    nickname: "nickname",
-    purpose: "purpose",
-    keywords: "keywords",
-    business: "business",
-    city: "city",
-    state: "state",
-    county: "county",
-    country: "country",
   },
 
   failScore: { score: 0, order: 0, size: 0 },
@@ -361,21 +228,10 @@ module.exports = {
     return true;
   },
 
-  /**
-   * Set or create an object element
-   * as an array of property names.  So if array=[a,b,c,d] then this
-   * function return obj.a.b.c.d
-   *
-   * @param obj is an object
-   * @param array is the element defined
-   * as [a,b,c,d]
-   * @param value is the value to set the element to
-   */
   setCreateElementArray(obj, array, value) {
     let ans = obj;
     for (let j = 0; j < array.length; j++) {
       let i = array[j];
-      console.log("i", i, "value", value);
       if (j == array.length - 1) {
         ans[i] = value;
         break;
@@ -403,8 +259,6 @@ module.exports = {
    * as [a,b,c,d]
    */
   getObjElementArray(obj, array) {
-    //if(!array) return null;
-
     let ans = obj;
     for (let i of array) {
       if (ans[i] != null) {
